@@ -91,7 +91,7 @@
             overflow: hidden;
             scroll-behavior: smooth;
             margin: 20px auto;
-            width: 80%;
+            width: 100%;
             max-width: 1200px;
             aspect-ratio: 16 / 9;
             border: 2px solid rgba(255, 255, 255, 0.1);
@@ -205,7 +205,8 @@
         <!-- 換成您準備好的新年圖片或 GIF -->
         <img src="static/2025.jpg" alt="Lunar New Year">
         <h2>新年快樂！</h2>
-        <p>祝您蛇年行大運，研究順利、萬事如意！</p>
+        <p>固態照明實驗室全體師生<br/>
+        ㊗️您蛇年行大運，研究順利、萬事如意！</p>
       </div>
     </div>
 
@@ -223,9 +224,9 @@
 
     <!-- 跑馬燈區域 (Carousel) -->
     <div class="carousel" id="carousel">
-        <img src="static/images/Home/慶生20241205.jpg" alt="Photo 1">
-        <img src="static/images/Home/交換禮物20241225.jpg" alt="Photo 2">
-        <img src="static/images/Home/鬥牛士二鍋聚餐20250103.jpg" alt="Photo 3">
+        <img src="static/images/index/慶生20241205.jpg" alt="Photo 1">
+        <img src="static/images/index/交換禮物20241225.jpg" alt="Photo 2">
+        <img src="static/images/index/鬥牛士二鍋聚餐20250103.jpg" alt="Photo 3">
     </div>
 
     <!-- 實驗室資訊區 -->
@@ -239,19 +240,19 @@
         </ul>
         <p>歡迎有興趣的學生與研究人員加入我們！</p>
         <p>
-            電話：+886-3-5593142 ＃1359、3384<br>
+            電話：03-5593142 ＃1359、3384<br>
             地址：304新竹縣新豐鄉新興路1號（明新科大逢喜樓-116室）
         </p>
     </div>
 
     <!-- 圖片展示區 (gallery) -->
     <div class="gallery">
-        <img src="static/images/Home/photo (6).jpg" alt="Photo 1">
-        <img src="static/images/Home/photo (8).jpg" alt="Photo 2">
-        <img src="static/images/Home/photo (4).jpg" alt="Photo 3">
-        <img src="static/images/Home/photo (5).jpg" alt="Photo 4">
-        <img src="static/images/Home/photo (9).jpg" alt="Photo 5">
-        <img src="static/images/Home/photo (10).jpg" alt="Photo 6">
+        <img src="static/images/index/photo (6).jpg" alt="Photo 1">
+        <img src="static/images/index/photo (8).jpg" alt="Photo 2">
+        <img src="static/images/index/photo (4).jpg" alt="Photo 3">
+        <img src="static/images/index/photo (5).jpg" alt="Photo 4">
+        <img src="static/images/index/photo (9).jpg" alt="Photo 5">
+        <img src="static/images/index/photo (10).jpg" alt="Photo 6">
     </div>
 
     <!-- 影片按鈕 -->
@@ -259,69 +260,14 @@
         <a href="Videos.html" class="video-button">查看影片</a>
     </div>
 
-    <!-- 自動跑馬燈 JS -->
-    <script>
-        const carousel = document.getElementById("carousel");
-        let scrollAmount = 0;
-
-        function startCarousel() {
-            const slideWidth = carousel.offsetWidth; // 可視範圍寬度
-            setInterval(() => {
-                scrollAmount += slideWidth;
-                // 當捲動到最後面就回到起點
-                if (scrollAmount >= carousel.scrollWidth - carousel.offsetWidth) {
-                    scrollAmount = 0;
-                }
-                carousel.scrollTo({
-                    left: scrollAmount,
-                    behavior: "smooth"
-                });
-            }, 3000); // 每3秒自動切換
-        }
-        window.addEventListener("load", startCarousel);
-    </script>
-
-    <!-- 訪客計數器 (localStorage) -->
-    <script>
-        const countKey = "visitorCount";
-        const visitorCountElement = document.getElementById("visitor-count");
-
-        let visitorCount = parseInt(localStorage.getItem(countKey)) || 0;
-        visitorCount++;
-        localStorage.setItem(countKey, visitorCount);
-
-        if (visitorCountElement) {
-            visitorCountElement.textContent = visitorCount;
-        }
-    </script>
-
-    <!-- 新年彈窗 JS：頁面載入後顯示 / 按 X 關閉 -->
-    <script>
-        const newYearPopup = document.getElementById('newYearPopup');
-        const popupClose   = document.getElementById('popupClose');
-
-        // 頁面載入後顯示彈窗
-        window.addEventListener('load', () => {
-          newYearPopup.style.display = 'flex';
-        });
-
-        // 點擊 X 關閉彈窗
-        popupClose.addEventListener('click', () => {
-          newYearPopup.style.display = 'none';
-        });
-
-        // 點擊背景關閉（可選擇是否保留）
-        newYearPopup.addEventListener('click', (e) => {
-          if (e.target === newYearPopup) {
-            newYearPopup.style.display = 'none';
-          }
-        });
-    </script>
 
     <!-- 頁尾 -->
     <div class="footer">
         <p>© 2024 固態照明實驗室. All Rights Reserved.</p>
-        <p class="visitor-count">訪問次數：<span id="visitor-count">0</span></p>
+        <p class="visitor-count">網頁訪問次數：<span id="visitor-count">0</span></p>
     </div>
+    <!-- 訪客計數器 JS (請確保路徑正確) -->
+    <script src="js/script.js"></script>
+
 </body>
 </html>
