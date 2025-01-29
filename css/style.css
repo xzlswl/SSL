@@ -12,6 +12,11 @@ body *:lang(zh) {
     font-family: 'Noto Sans TC', sans-serif;
 }
 
+#newYearPopup {
+    display: none; /* 預設隱藏 */
+}
+
+
 /* === 2. 頁面標題 (h1) === */
 h1 {
     text-align: center;
@@ -68,6 +73,41 @@ nav a:not(:last-child)::after {
     color: #bdc3c7;
     display: inline-block;
 }
+
+/* 讓按鈕成對顯示 */
+.floating-btn-container {
+    position: fixed;  /* 固定在視窗上 */
+    right: 20px;
+    bottom: 20px;  /* 固定在底部 20px */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    gap: 10px; /* 按鈕間距 */
+    z-index: 9999; /* 確保在最上層 */
+}
+
+
+/* 漂浮按鈕樣式 */
+.floating-btn {
+    background-color: #00FFC6;
+    color: #141E30;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+    min-width: 140px; /* 確保兩個按鈕寬度一致 */
+    text-align: center;
+}
+.floating-btn:hover {
+    background-color: #00e3b4;
+    transform: scale(1.1);
+}
+
+
 /* 若有訪客計數器 .visitor-count，可放這裡 */
 .footer .visitor-count {
     font-weight: bold;

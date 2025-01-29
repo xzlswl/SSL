@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("JavaScript 正在執行...");
+    
     /* === 1. 訪客計數器 === */
     const countKey = "visitorCount";
     const visitorCountElement = document.getElementById("visitor-count");
@@ -9,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem(countKey, visitorCount);
         visitorCountElement.textContent = visitorCount;
     } else {
-        console.error("訪問次數元素 #visitor-count 未找到，請檢查 HTML 內是否正確放置 id");
+        console.warn("訪問次數元素 #visitor-count 未找到，略過計數更新");
     }
 
     /* === 2. 農曆新年彈窗控制 === */
@@ -38,20 +40,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* === 3. 跑馬燈（Carousel）自動滾動 === */
     const carousel = document.getElementById("carousel");
-    let index = 0;
-    const images = carousel.querySelectorAll("img"); // 抓取所有圖片
-    const totalImages = images.length;
+    if (carousel) {
+        let index = 0;
+        const images = carousel.querySelectorAll("img"); 
+        const totalImages = images.length;
     
-    function startCarousel() {
-        if (!carousel) return;
-        setInterval(() => {
-            index = (index + 1) % totalImages; // 確保索引值在範圍內循環
-            carousel.scrollTo({
-                left: carousel.offsetWidth * index, 
-                behavior: "smooth"
-            });
-        }, 3000); // 每 3 秒滾動
+        function startCarousel() {
+            if (!carousel) return;
+            setInterval(() => {
+                index = (index + 1) % totalImages;
+                carousel.scrollTo({
+                    left: carousel.offsetWidth * index, 
+                    behavior: "smooth"
+                });
+            }, 3000);
+        }
+        startCarousel();
+    } else {
+        console.warn("找不到 #carousel，略過跑馬燈初始化");
     }
-    startCarousel();
+    
+    /* === 4. 漂浮按鈕 === */
+    const btnContainer = document.querySelector(".floating-btn-container");
+
+
+    // 按鈕點擊事件（導航到其他頁面）
+    document.getElementById("openGallery").addEventListener("click", function () {
+        window.location.href = "Graduation.html"; // 跳轉到歷年畢業典禮
+    });
+
+    document.getElementById("openVideos").addEventListener("click", function () {
+        window.location.href = "Videos.html"; // 跳轉到影片錦集
+    });
 
 });
