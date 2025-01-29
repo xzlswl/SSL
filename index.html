@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>固態照明實驗室</title>
+    <!-- 引入 Orbitron (科技/電競風) 以及 Noto Sans TC (支援中文) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <!-- 若有共用 style.css，請自行確認路徑或合併樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ======= 農曆新年彈窗 (Popup) 樣式 ======= */
+        .popup-overlay {
+            display: none; /* 預設隱藏 */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999; /* 位於最上層 */
+            display: flex; /* 用 flex 來置中內容 */
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s forwards; /* 淡入動畫 */
+        }
+        .popup-close {
+            position: absolute;
+            top: 10px; right: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .popup-close:hover {
+            color: #e74c3c;
+        }
+        .popup-content img {
+            width: 100%;
+            max-width: 180px;
+            margin-bottom: 20px;
+        }
+        .popup-content h2 {
+            margin: 10px 0;
+            color: #c0392b;
+        }
+        .popup-content p {
+            margin: 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            0%   { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ======= 新增或修改的動畫 / 效果 ======= */
+        @keyframes neonFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px  #00FFC6,
+                    0 0 10px #00FFC6,
+                    0 0 20px #00FFC6;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+        @keyframes fadeInBlock {
+            0%   { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ====== 1. 網站主標題 (H1) - 加入霓虹閃爍動畫 ====== */
+        h1 {
+            animation: neonFlicker 2.5s infinite;
+        }
+
+        /* ====== 2. 跑馬燈 (Carousel) 區域 ====== */
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            scroll-behavior: smooth;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 25px rgba(0, 255, 198, 0.2);
+            background-color: rgba(255, 255, 255, 0.05);
+            /* 淡入動畫 */
+            opacity: 0;
+            animation: fadeInBlock 1.5s forwards;
+        }
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .carousel img:hover {
+            transform: scale(1.02);
+            filter: brightness(1.2);
+        }
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* ====== 3. 實驗室資訊 (info) ====== */
+        .info {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 25px rgba(0, 255, 198, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInBlock 1.5s 0.3s forwards; /* 0.3秒延遲淡入 */
+            opacity: 0;
+        }
+        .info h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #00FFC6;
+            font-weight: 700;
+        }
+        .info p, .info li {
+            line-height: 1.8;
+            color: #ecf0f1;
+        }
+        .info ul {
+            padding-left: 20px;
+        }
+
+        /* ====== 4. 圖片展示區 (gallery) ====== */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 80%;
+            animation: fadeInBlock 1.5s 0.6s forwards; /* 0.6秒延遲淡入 */
+            opacity: 0;
+        }
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 15px rgba(0, 255, 198, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 15px rgba(0, 255, 198, 0.6);
+            filter: brightness(1.2);
+        }
+
+        /* ====== 5. 影片按鈕 ====== */
+        .video-button-container {
+            text-align: center;
+            margin: 30px 0;
+            animation: fadeInBlock 1.5s 0.9s forwards; /* 0.9秒延遲淡入 */
+            opacity: 0;
+        }
+        .video-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #141E30;
+            background-color: #00FFC6;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 198, 0.5);
+        }
+        .video-button:hover {
+            background-color: #00e3b4;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 255, 198, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- 農曆新年彈窗 -->
+    <div id="newYearPopup" class="popup-overlay">
+      <div class="popup-content">
+        <span id="popupClose" class="popup-close">&times;</span>
+        <!-- 換成您準備好的新年圖片或 GIF -->
+        <img src="static/2025.jpg" alt="Lunar New Year">
+        <h2>新年快樂！</h2>
+        <p>祝您蛇年行大運，研究順利、萬事如意！</p>
+      </div>
+    </div>
+
+    <!-- 網站主標題 -->
+    <h1>固態照明實驗室</h1>
+
+    <!-- 導覽列 -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="Graduate.html">Graduate</a>
+        <a href="Daily_life.html">Daily Life</a>
+        <a href="Honor.html">Honor</a>
+    </nav>
+
+    <!-- 跑馬燈區域 (Carousel) -->
+    <div class="carousel" id="carousel">
+        <img src="static/images/Home/慶生20241205.jpg" alt="Photo 1">
+        <img src="static/images/Home/交換禮物20241225.jpg" alt="Photo 2">
+        <img src="static/images/Home/鬥牛士二鍋聚餐20250103.jpg" alt="Photo 3">
+    </div>
+
+    <!-- 實驗室資訊區 -->
+    <div class="info">
+        <h2>實驗室資訊</h2>
+        <p>固態照明實驗室專注於光學材料與照明系統的研究。我們的研究領域包括但不限於：</p>
+        <ul>
+            <li>LED 照明系統設計</li>
+            <li>光學材料的特性研究</li>
+            <li>光熱效應分析</li>
+        </ul>
+        <p>歡迎有興趣的學生與研究人員加入我們！</p>
+        <p>
+            電話：+886-3-5593142 ＃1359、3384<br>
+            地址：304新竹縣新豐鄉新興路1號（明新科大逢喜樓-116室）
+        </p>
+    </div>
+
+    <!-- 圖片展示區 (gallery) -->
+    <div class="gallery">
+        <img src="static/images/Home/photo (6).jpg" alt="Photo 1">
+        <img src="static/images/Home/photo (8).jpg" alt="Photo 2">
+        <img src="static/images/Home/photo (4).jpg" alt="Photo 3">
+        <img src="static/images/Home/photo (5).jpg" alt="Photo 4">
+        <img src="static/images/Home/photo (9).jpg" alt="Photo 5">
+        <img src="static/images/Home/photo (10).jpg" alt="Photo 6">
+    </div>
+
+    <!-- 影片按鈕 -->
+    <div class="video-button-container">
+        <a href="Videos.html" class="video-button">查看影片</a>
+    </div>
+
+    <!-- 自動跑馬燈 JS -->
+    <script>
+        const carousel = document.getElementById("carousel");
+        let scrollAmount = 0;
+
+        function startCarousel() {
+            const slideWidth = carousel.offsetWidth; // 可視範圍寬度
+            setInterval(() => {
+                scrollAmount += slideWidth;
+                // 當捲動到最後面就回到起點
+                if (scrollAmount >= carousel.scrollWidth - carousel.offsetWidth) {
+                    scrollAmount = 0;
+                }
+                carousel.scrollTo({
+                    left: scrollAmount,
+                    behavior: "smooth"
+                });
+            }, 3000); // 每3秒自動切換
+        }
+        window.addEventListener("load", startCarousel);
+    </script>
+
+    <!-- 訪客計數器 (localStorage) -->
+    <script>
+        const countKey = "visitorCount";
+        const visitorCountElement = document.getElementById("visitor-count");
+
+        let visitorCount = parseInt(localStorage.getItem(countKey)) || 0;
+        visitorCount++;
+        localStorage.setItem(countKey, visitorCount);
+
+        if (visitorCountElement) {
+            visitorCountElement.textContent = visitorCount;
+        }
+    </script>
+
+    <!-- 新年彈窗 JS：頁面載入後顯示 / 按 X 關閉 -->
+    <script>
+        const newYearPopup = document.getElementById('newYearPopup');
+        const popupClose   = document.getElementById('popupClose');
+
+        // 頁面載入後顯示彈窗
+        window.addEventListener('load', () => {
+          newYearPopup.style.display = 'flex';
+        });
+
+        // 點擊 X 關閉彈窗
+        popupClose.addEventListener('click', () => {
+          newYearPopup.style.display = 'none';
+        });
+
+        // 點擊背景關閉（可選擇是否保留）
+        newYearPopup.addEventListener('click', (e) => {
+          if (e.target === newYearPopup) {
+            newYearPopup.style.display = 'none';
+          }
+        });
+    </script>
+
+    <!-- 頁尾 -->
+    <div class="footer">
+        <p>© 2024 固態照明實驗室. All Rights Reserved.</p>
+        <p class="visitor-count">訪問次數：<span id="visitor-count">0</span></p>
+    </div>
+</body>
+</html>
