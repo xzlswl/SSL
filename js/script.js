@@ -42,20 +42,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const carousel = document.getElementById("carousel");
     if (carousel) {
         let index = 0;
-        const images = carousel.querySelectorAll("img"); 
+        const images = carousel.querySelectorAll("img");
         const totalImages = images.length;
-    
-        function startCarousel() {
-            if (!carousel) return;
-            setInterval(() => {
+
+        if (totalImages > 1) { // 只有一張圖片時不進行滾動
+            function animateCarousel() {
                 index = (index + 1) % totalImages;
-                carousel.scrollTo({
-                    left: carousel.offsetWidth * index, 
-                    behavior: "smooth"
-                });
-            }, 3000);
+                carousel.style.transition = "transform 0.5s ease-in-out"; // 平滑過渡
+                carousel.style.transform = `translateX(-${index * 100}%)`;
+
+                setTimeout(() => requestAnimationFrame(animateCarousel), 3000);
+            }
+
+            animateCarousel();
+        } else {
+            console.warn("跑馬燈圖片數量不足，不啟動自動滾動");
         }
-        startCarousel();
     } else {
         console.warn("找不到 #carousel，略過跑馬燈初始化");
     }
