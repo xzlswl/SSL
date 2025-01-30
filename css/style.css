@@ -60,6 +60,30 @@ nav a:not(:last-child)::after {
     margin-left: 15px;
 }
 
+/* 跑馬燈容器 */
+.carousel {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    position: relative; /* 讓內部 .carousel-inner 絕對定位 */
+}
+
+/* 內部圖片包裝容器 */
+.carousel-inner {
+    display: flex;
+    white-space: nowrap;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* 確保所有圖片橫向排列 */
+.carousel img {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+
 /* === 4. 頁腳 (footer) === */
 .footer {
     text-align: center;
