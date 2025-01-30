@@ -107,26 +107,6 @@ nav a:not(:last-child)::after {
     transform: scale(1.1);
 }
 
-.carousel {
-    display: flex; /* 確保圖片橫向排列 */
-    overflow: hidden;
-    width: 100%;
-    max-width: 1200px;
-    aspect-ratio: 16 / 9;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    box-shadow: 0 4px 25px rgba(0, 255, 198, 0.2);
-    background-color: rgba(255, 255, 255, 0.05);
-    opacity: 0;
-    animation: fadeInBlock 1.5s forwards;
-}
-.carousel img {
-    flex-shrink: 0;
-    object-fit: cover;
-}
-
-
-
 /* 若有訪客計數器 .visitor-count，可放這裡 */
 .footer .visitor-count {
     font-weight: bold;
