@@ -1,0 +1,7 @@
+About照片比例﹥不限制
+Daily_life照片比例﹥16：9 or 4：3
+Graduated照片比例﹥1：1
+Graduation照片比例﹥４：３
+Honor照片比例﹥不限制
+index跑馬燈照片比例﹥16：9
+index最下方展示照片比例﹥3：4
