@@ -38,24 +38,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* === 3. 跑馬燈（Carousel）自動滾動 === */
+    /* === 3. 跑馬燈 (Carousel) 改進版 === */
     const carousel = document.getElementById("carousel");
     if (carousel) {
         let index = 0;
-        const images = carousel.querySelectorAll("img"); 
+        const images = carousel.querySelectorAll("img");
         const totalImages = images.length;
-    
-        function startCarousel() {
-            if (!carousel) return;
-            setInterval(() => {
-                index = (index + 1) % totalImages;
-                carousel.scrollTo({
-                    left: carousel.offsetWidth * index, 
-                    behavior: "smooth"
-                });
-            }, 3000);
+
+        // 設定 CSS 過渡動畫
+        carousel.style.display = "flex";
+        carousel.style.transition = "transform 0.8s ease-in-out"; // 加入過渡動畫
+        carousel.style.width = `${totalImages * 100}%`; // 讓圖片排列在一行
+
+        images.forEach(img => img.style.width = `${100 / totalImages}%`); // 確保每張圖片平均分配
+
+        let interval = setInterval(nextSlide, 3000); // 自動滾動
+
+        function nextSlide() {
+            index = (index + 1) % totalImages;
+            carousel.style.transform = `translateX(-${index * 100}%)`; // 使用 `translateX` 滑動
         }
-        startCarousel();
+
+        // **用戶手動滾動時暫停自動滾動**
+        carousel.addEventListener("touchstart", () => clearInterval(interval));
+        carousel.addEventListener("touchend", () => interval = setInterval(nextSlide, 3000));
     } else {
         console.warn("找不到 #carousel，略過跑馬燈初始化");
     }
