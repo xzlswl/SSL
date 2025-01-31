@@ -87,27 +87,31 @@ nav a:not(:last-child)::after {
 .video-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    justify-content: center; /* 影片卡片水平置中 */
+    gap: 20px; /* 設定影片之間間距 */
     margin: 20px auto;
-    max-width: 1200px;
+    max-width: 1200px; /* 限制最大寬度 */
 }
 
 /* === 影片卡片樣式 === */
 .video-card {
-    width: calc(33.333% - 20px); /* 桌機 3 列 */
+    width: 320px; /* 固定影片卡片寬度 */
+    flex-grow: 1; /* 讓影片自適應 */
     background-color: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
 }
-
 .video-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 20px rgba(0, 255, 198, 0.5);
+}
+.video-card iframe {
+    width: 100%; /* 讓 YouTube 影片填滿卡片 */
+    height: 180px; /* 統一影片高度 */
+    display: block;
 }
 
 /* === 響應式影片容器（確保16:9） === */
@@ -128,13 +132,11 @@ nav a:not(:last-child)::after {
 
 /* === 標題樣式 === */
 .video-card h3 {
-    margin: 10px;
-    color: #00FFC6;
-    font-size: 18px;
+    margin: 10px 0;
     text-align: center;
-    text-shadow:
-        0 0 3px  #00FFC6,
-        0 0 6px  #00FFC6;
+    font-size: 18px;
+    color: #00FFC6;
+    text-shadow: 0 0 3px #00FFC6, 0 0 6px #00FFC6;
 }
 
 /* === 響應式設計 === */
