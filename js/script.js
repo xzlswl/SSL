@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const showPopup = false; 
         
         // 頁面載入後顯示彈窗,若不顯示彈窗flex修改成none
-        newYearPopup.style.display = "flex";
+        newYearPopup.style.display = "none";
 
         // 點擊 X 按鈕關閉
         popupClose.addEventListener("click", () => {
